@@ -5,6 +5,9 @@
 
 -------------------------------------------------
 
+Jakarta Persistence (JPA)
+Tutorial definitivo: Tudo o que você precisa para começar bem com JPA
+https://blog.algaworks.com/tutorial-jpa/
 
 -------------------------------------------------
 
