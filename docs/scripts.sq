@@ -1,3 +1,11 @@
 select * from cozinha
 /
 select * from restaurante
+/
+select * from forma_pagamento
+/
+select * from permissao
+/
+select * from estado
+/
+select * from cidade
