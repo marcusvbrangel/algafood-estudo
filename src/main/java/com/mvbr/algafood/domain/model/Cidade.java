@@ -5,13 +5,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import java.math.BigDecimal;
-
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString(onlyExplicitlyIncluded = true)
 @Entity
-public class Restaurante {
+public class Cidade {
 
     @EqualsAndHashCode.Include
     @Id
@@ -22,11 +20,8 @@ public class Restaurante {
     @Column(length = 50, nullable = false)
     private String nome;
 
-    @Column(nullable = false)
-private BigDecimal taxaFrete;
-
     @ManyToOne
-    @JoinColumn(name = "cozinha_id", nullable = false)
-    private Cozinha cozinha;
+    @JoinColumn(nullable = false)
+    private Estado estado;
 
 }

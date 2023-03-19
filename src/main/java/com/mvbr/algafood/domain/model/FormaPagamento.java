@@ -5,13 +5,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import java.math.BigDecimal;
-
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString(onlyExplicitlyIncluded = true)
 @Entity
-public class Restaurante {
+public class FormaPagamento {
 
     @EqualsAndHashCode.Include
     @Id
@@ -19,14 +17,7 @@ public class Restaurante {
     private Long id;
 
     @ToString.Include
-    @Column(length = 50, nullable = false)
-    private String nome;
-
-    @Column(nullable = false)
-private BigDecimal taxaFrete;
-
-    @ManyToOne
-    @JoinColumn(name = "cozinha_id", nullable = false)
-    private Cozinha cozinha;
+    @Column(length = 100, nullable = false)
+    private String descricao;
 
 }
