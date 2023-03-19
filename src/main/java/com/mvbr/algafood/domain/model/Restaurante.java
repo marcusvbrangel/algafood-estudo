@@ -26,4 +26,7 @@ public class Restaurante {
     @Column(nullable = true)
     private BigDecimal taxaFrete;
 
+    @ManyToOne
+    private Cozinha cozinha;
+
 }
