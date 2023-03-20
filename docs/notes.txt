@@ -11,13 +11,161 @@ https://blog.algaworks.com/tutorial-jpa/
 
 -------------------------------------------------
 
+docker container run -d \
+	--name postgres-local \
+	-e POSTGRES_PASSWORD=mysecretpassword \
+	-p 5432:5432 \
+	-e PGDATA=/var/lib/postgresql/data/pgdata \
+	-v /home/wolf/pgdata/mount:/var/lib/postgresql/data \
+	--restart unless-stopped \
+	postgres:14.6
 
 -------------------------------------------------
 
 
+docker container exec -it postgres-local bash
+
+
+root@f07902f8e23e:/# postgres --version
+postgres (PostgreSQL) 14.6 (Debian 14.6-1.pgdg110+1)
+
+
+
+root@b330d2a59760:/# psql --version
+
+    psql (PostgreSQL) 15.1 (Debian 15.1-1.pgdg110+1)
+
+
+root@b330d2a59760:/# psql --help
+
+    . . .
+
+
+
+cat /etc/passwd | grep postgres
+
+
+
+-------------------------------------------------
+
+root@f07902f8e23e:/# psql -h localhost -U postgres
+
+
+postgres-# \h
+
+postgres-# \?
+
+postgres=# \! clear
+
+postgres=# \l
+
+postgres=# \du
+
+postgres=# \c armazem
+
+    You are now connected to database "armazem" as user "postgres".
+
+
+armazem=# \d
+
+    Did not find any relations.
+
+
+armazem=# \dS
+
+armazem=# \!
+
+# pwd
+
+# exit
+
+    armazem=#
+
+armazem=# \! date
+
+    Sat 24 Dec 2022 02:03:24 AM UTC
+
+
+armazem=# \q
+
+    root@f07902f8e23e:/#
+
+
+
+armazem=# CREATE TABLE produtos.categorias (
+id serial primary key,
+nome varchar(50) not null unique);
+
+
+armazem=# \d
+
+
+
+armazem=# SELECT *
+FROM information_schema.schemata;
+ catalog_name |    schema_name     | schema_owner | default_character_set_catalog | default_character_set_schema | default_character_set_name | sql_pa
+th
+--------------+--------------------+--------------+-------------------------------+------------------------------+----------------------------+-------
+---
+ armazem      | pg_toast           | postgres     |                               |                              |                            |
+ armazem      | pg_catalog         | postgres     |                               |                              |                            |
+ armazem      | public             | postgres     |                               |                              |                            |
+ armazem      | information_schema | postgres     |                               |                              |                            |
+ armazem      | produtos           | postgres     |                               |                              |                            |
+(5 rows)
+
+
+
+
+armazem=# \d produtos.produtos
+                                         Table "produtos.produtos"
+  Column   |          Type          | Collation | Nullable |                    Default
+-----------+------------------------+-----------+----------+-----------------------------------------------
+ id        | integer                |           | not null | nextval('produtos.produtos_id_seq'::regclass)
+ nome      | character varying(80)  |           | not null |
+ descricao | character varying(200) |           |          |
+Indexes:
+    "produtos_pkey" PRIMARY KEY, btree (id)
+
+
+
+
+\i /home/wolf/Downloads/produtos.produtos.sql
+
+
+
 -------------------------------------------------
 
 
+
 -------------------------------------------------
+
+
+
+-------------------------------------------------
+
+
+
+-------------------------------------------------
+
+
+
+
+-------------------------------------------------
+
+
+
+-------------------------------------------------
+
+
+
+-------------------------------------------------
+
+
+
+-------------------------------------------------
+
+
+
 
 
