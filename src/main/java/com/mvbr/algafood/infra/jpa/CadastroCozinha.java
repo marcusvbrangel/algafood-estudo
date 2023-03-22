@@ -1,4 +1,4 @@
-package com.mvbr.algafood.jpa;
+package com.mvbr.algafood.infra.jpa;
 
 import com.mvbr.algafood.domain.model.Cozinha;
 import jakarta.persistence.EntityManager;

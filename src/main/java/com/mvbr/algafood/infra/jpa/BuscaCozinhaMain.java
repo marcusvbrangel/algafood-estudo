@@ -1,4 +1,4 @@
-package com.mvbr.algafood.jpa;
+package com.mvbr.algafood.infra.jpa;
 
 import com.mvbr.algafood.AlgafoodEstudoApplication;
 import com.mvbr.algafood.domain.model.Cozinha;
@@ -7,7 +7,7 @@ import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
 
-public class InclusaoCozinhaMain {
+public class BuscaCozinhaMain {
 
     public static void main(String[] args) {
 
@@ -17,17 +17,9 @@ public class InclusaoCozinhaMain {
 
         CozinhaRepository cozinhaRepository = appContext.getBean(CozinhaRepository.class);
 
-        Cozinha cozinha1 = new Cozinha();
-        cozinha1.setNome("Brasileira");
+        Cozinha cozinha = cozinhaRepository.buscar(1L);
 
-        Cozinha cozinha2 = new Cozinha();
-        cozinha2.setNome("Japonesa");
-
-        cozinha1 = cozinhaRepository.salvar(cozinha1);
-        cozinha2 = cozinhaRepository.salvar(cozinha2);
-
-        System.out.printf("%d - %s \n", cozinha1.getId(), cozinha1.getNome());
-        System.out.printf("%d - %s \n", cozinha2.getId(), cozinha2.getNome());
+        System.out.printf("%d - %s \n", cozinha.getId(), cozinha.getNome());
 
     }
 }

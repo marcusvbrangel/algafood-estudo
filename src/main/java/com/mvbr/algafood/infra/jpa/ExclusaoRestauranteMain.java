@@ -1,15 +1,13 @@
-package com.mvbr.algafood.jpa;
+package com.mvbr.algafood.infra.jpa;
 
 import com.mvbr.algafood.AlgafoodEstudoApplication;
-import com.mvbr.algafood.domain.model.Cozinha;
-import com.mvbr.algafood.domain.repository.CozinhaRepository;
+import com.mvbr.algafood.domain.model.Restaurante;
+import com.mvbr.algafood.domain.repository.RestauranteRepository;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
 
-import java.util.List;
-
-public class ConsultaCozinhaMain {
+public class ExclusaoRestauranteMain {
 
     public static void main(String[] args) {
 
@@ -17,13 +15,12 @@ public class ConsultaCozinhaMain {
                 .web(WebApplicationType.NONE)
                 .run(args);
 
-        CozinhaRepository cozinhaRepository = appContext.getBean(CozinhaRepository.class);
+        RestauranteRepository restauranteRepository = appContext.getBean(RestauranteRepository.class);
 
-        List<Cozinha> cozinhas = cozinhaRepository.listar();
+        Restaurante restaurante = new Restaurante();
+        restaurante.setId(1L);
 
-        for (Cozinha cozinha : cozinhas) {
-            System.out.println(cozinha.getNome());
-        }
+        restauranteRepository.remover(restaurante);
 
     }
 }

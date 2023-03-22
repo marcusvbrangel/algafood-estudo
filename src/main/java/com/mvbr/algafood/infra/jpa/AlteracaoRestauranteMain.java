@@ -1,4 +1,4 @@
-package com.mvbr.algafood.jpa;
+package com.mvbr.algafood.infra.jpa;
 
 import com.mvbr.algafood.AlgafoodEstudoApplication;
 import com.mvbr.algafood.domain.model.Restaurante;
@@ -7,9 +7,7 @@ import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
 
-import java.util.List;
-
-public class ConsultaRestauranteMain {
+public class AlteracaoRestauranteMain {
 
     public static void main(String[] args) {
 
@@ -19,12 +17,13 @@ public class ConsultaRestauranteMain {
 
         RestauranteRepository restauranteRepository = appContext.getBean(RestauranteRepository.class);
 
-        List<Restaurante> restaurantes = restauranteRepository.listar();
+        Restaurante restaurante = new Restaurante();
+        restaurante.setId(1L);
+        restaurante.setNome("Ponto Certo 2");
 
-        for (Restaurante restaurante : restaurantes) {
-            System.out.printf("%d - %s - %f - %s \n", restaurante.getId(), restaurante.getNome(),
-                restaurante.getTaxaFrete(), restaurante.getCozinha().getNome());
-        }
+        restaurante = restauranteRepository.salvar(restaurante);
+
+        System.out.printf("%d - %s \n", restaurante.getId(), restaurante.getNome());
 
     }
 }
