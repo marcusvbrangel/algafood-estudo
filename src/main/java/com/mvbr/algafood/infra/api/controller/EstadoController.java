@@ -1,6 +1,5 @@
 package com.mvbr.algafood.infra.api.controller;
 
-import com.mvbr.algafood.domain.model.Cozinha;
 import com.mvbr.algafood.domain.model.Estado;
 import com.mvbr.algafood.domain.repository.EstadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;

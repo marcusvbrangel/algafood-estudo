@@ -21,8 +21,8 @@ public class Cozinha {
 
     @ToString.Include
 //    @JsonIgnore
-    @JsonProperty(value = "titulo")
-    @Column(length = 50, nullable = false)
+//    @JsonProperty(value = "titulo")
+    @Column(length = 50, nullable = false, unique = true)
     private String nome;
 
 }

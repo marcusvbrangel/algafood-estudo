@@ -17,6 +17,6 @@ public class Estado {
     private Long id;
 
     @ToString.Include
-    @Column(length = 50, nullable = false)
+    @Column(length = 50, nullable = false, unique = true)
     private String nome;
 }
