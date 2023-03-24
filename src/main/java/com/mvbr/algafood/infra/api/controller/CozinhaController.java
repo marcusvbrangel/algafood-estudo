@@ -35,7 +35,6 @@ public class CozinhaController {
         } catch (EntidadeNaoEncontradaException e) {
             System.out.println("Cozinha buscar: " + e.getMessage());
             return ResponseEntity.notFound().build();
-
         }
 
 //        return ResponseEntity.status(HttpStatus.OK).body(cozinha);
@@ -87,7 +86,7 @@ public class CozinhaController {
             System.out.println("Cozinha atualizar: " + e.getMessage());
             return ResponseEntity.notFound().build();
 
-        } catch (EntidadeEmUsoException e) {
+        } catch (EntidadeExistenteException e) {
             System.out.println("Cozinha atualizar: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }

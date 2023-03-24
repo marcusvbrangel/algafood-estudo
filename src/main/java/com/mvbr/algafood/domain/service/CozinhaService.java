@@ -24,10 +24,12 @@ public class CozinhaService {
         Cozinha cozinha = cozinhaRepository.buscar(id);
 
         if (cozinha == null) {
-            throw new EmptyResultDataAccessException(1);
+            throw new EntidadeNaoEncontradaException(
+                String.format("Cozinha de código %d não pode ser encontrada", id));
         }
 
         return cozinha;
+
     }
 
     public List<Cozinha> listar() {
@@ -49,18 +51,21 @@ public class CozinhaService {
     public Cozinha atualizar(Long id, Cozinha cozinha) {
 
         try {
-            Cozinha cozinhaAtual = buscar(id);
+
+            Cozinha cozinhaAtual = cozinhaRepository.buscar(id);
+
+            if (cozinhaAtual == null) {
+                throw new EntidadeNaoEncontradaException(
+                    String.format("Cozinha de código %d não pode ser encontrada", id));
+            }
+
             BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
 
-            return cozinhaRepository.salvar(cozinha);
-
-        } catch (EmptyResultDataAccessException e) {
-            throw  new EntidadeNaoEncontradaException(
-                    String.format("Cozinha de código %d não pode ser encontrada", id));
+            return cozinhaRepository.salvar(cozinhaAtual);
 
         } catch (DataIntegrityViolationException e) {
-            throw  new EntidadeEmUsoException(
-                    String.format("Cozinha de nome %s já existente", cozinha.getNome()));
+            throw new EntidadeExistenteException(
+                String.format("Cozinha de nome %s já existente", cozinha.getNome()));
         }
 
     }
@@ -68,13 +73,15 @@ public class CozinhaService {
     public void excluir(Long id) {
 
         try {
-            Cozinha cozinha = buscar(id);
+
+            Cozinha cozinha = cozinhaRepository.buscar(id);
+
+            if (cozinha == null) {
+                throw new EntidadeNaoEncontradaException(
+                    String.format("Cozinha de código %d não pode ser encontrada", id));
+            }
 
             cozinhaRepository.excluir(cozinha);
-
-        } catch (EmptyResultDataAccessException e) {
-            throw  new EntidadeNaoEncontradaException(
-                    String.format("Cozinha de código %d não pode ser encontrada", id));
 
         } catch (DataIntegrityViolationException e) {
             throw  new EntidadeEmUsoException(
