@@ -1,8 +1,13 @@
 package com.mvbr.algafood.infra.repository;
+
+import com.mvbr.algafood.domain.model.Cozinha;
 import com.mvbr.algafood.domain.model.Restaurante;
+import com.mvbr.algafood.domain.repository.CozinhaRepository;
 import com.mvbr.algafood.domain.repository.RestauranteRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,8 +37,7 @@ public class RestauranteRepositoryImpl implements RestauranteRepository {
 
     @Transactional
     @Override
-    public void remover(Restaurante restaurante) {
-        restaurante = buscar(restaurante.getId());
+    public void excluir(Restaurante restaurante) {
         manager.remove(restaurante);
     }
 
