@@ -38,6 +38,9 @@ public class CozinhaService {
 
     public Cozinha criar(Cozinha cozinha) {
 
+        // Aula: 4.30...
+        // Todo: validar se o nome da cozinha foi preenchido...
+
         try {
             return cozinhaRepository.salvar(cozinha);
 
@@ -49,6 +52,9 @@ public class CozinhaService {
     }
 
     public Cozinha atualizar(Long id, Cozinha cozinha) {
+
+        // Aula: 4.30...
+        // Todo: validar se o nome da cozinha foi preenchido...
 
         try {
 

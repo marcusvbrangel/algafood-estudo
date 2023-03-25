@@ -4,12 +4,9 @@ import com.mvbr.algafood.domain.exception.EntidadeEmUsoException;
 import com.mvbr.algafood.domain.exception.EntidadeExistenteException;
 import com.mvbr.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.mvbr.algafood.domain.model.Cozinha;
-import com.mvbr.algafood.domain.repository.CozinhaRepository;
 import com.mvbr.algafood.domain.service.CozinhaService;
 import com.mvbr.algafood.infra.dto.CozinhasXmlWrapper;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,7 +23,7 @@ public class CozinhaController {
     private CozinhaService cozinhaService;
 
     @RequestMapping("/{cozinhaId}")
-    public ResponseEntity<Cozinha> buscar(@PathVariable("cozinhaId") Long id) {
+    public ResponseEntity<?> buscar(@PathVariable("cozinhaId") Long id) {
 
         try {
             Cozinha cozinha = cozinhaService.buscar(id);
@@ -34,7 +31,7 @@ public class CozinhaController {
 
         } catch (EntidadeNaoEncontradaException e) {
             System.out.println("Cozinha buscar: " + e.getMessage());
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
 
 //        return ResponseEntity.status(HttpStatus.OK).body(cozinha);
@@ -62,21 +59,21 @@ public class CozinhaController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Cozinha> criar(@RequestBody Cozinha cozinha) {
+    public ResponseEntity<?> criar(@RequestBody Cozinha cozinha) {
 
         try {
             cozinha = cozinhaService.criar(cozinha);
-            return ResponseEntity.ok(cozinha);
+            return ResponseEntity.status(HttpStatus.CREATED).body(cozinha);
 
         } catch (EntidadeExistenteException e) {
             System.out.println("Cozinha criar: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
 
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Cozinha> atualizar(@PathVariable Long id, @RequestBody Cozinha cozinha) {
+    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody Cozinha cozinha) {
 
         try {
             cozinha = cozinhaService.atualizar(id, cozinha);
@@ -84,17 +81,17 @@ public class CozinhaController {
 
         } catch (EntidadeNaoEncontradaException e) {
             System.out.println("Cozinha atualizar: " + e.getMessage());
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 
         } catch (EntidadeExistenteException e) {
             System.out.println("Cozinha atualizar: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
 
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Cozinha> excluir(@PathVariable Long id) {
+    public ResponseEntity<?> excluir(@PathVariable Long id) {
 
         try {
             cozinhaService.excluir(id);
@@ -102,11 +99,11 @@ public class CozinhaController {
 
         } catch (EntidadeNaoEncontradaException e) {
             System.out.println("Cozinha excluir: " + e.getMessage());
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 
         } catch (EntidadeEmUsoException e) {
             System.out.println("Cozinha excluir: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
     }
 
