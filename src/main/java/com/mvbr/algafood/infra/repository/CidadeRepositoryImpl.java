@@ -17,25 +17,25 @@ public class CidadeRepositoryImpl implements CidadeRepository {
     private EntityManager manager;
 
     @Override
-    public List<Restaurante> listar() {
-        return manager.createQuery("from Restaurante", Restaurante.class).getResultList();
+    public List<Cidade> listar() {
+        return manager.createQuery("from Cidade", Cidade.class).getResultList();
     }
 
     @Override
-    public Restaurante buscar(Long id) {
-        return manager.find(Restaurante.class, id);
-    }
-
-    @Transactional
-    @Override
-    public Restaurante salvar(Restaurante restaurante) {
-        return manager.merge(restaurante);
+    public Cidade buscar(Long id) {
+        return manager.find(Cidade.class, id);
     }
 
     @Transactional
     @Override
-    public void excluir(Restaurante restaurante) {
-        manager.remove(restaurante);
+    public Cidade salvar(Cidade cidade) {
+        return manager.merge(cidade);
+    }
+
+    @Transactional
+    @Override
+    public void excluir(Cidade cidade) {
+        manager.remove(cidade);
     }
 
 }
