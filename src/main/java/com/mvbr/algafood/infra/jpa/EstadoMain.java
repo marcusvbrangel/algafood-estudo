@@ -61,7 +61,7 @@ public class EstadoMain {
         estado = new Estado();
         estado.setId(5L);
 
-        estadoRepository.remover(estado);
+        estadoRepository.excluir(estado);
 
         System.out.println("\n******************************************************************");
         System.out.println("Estado - listar (novamente) \n");

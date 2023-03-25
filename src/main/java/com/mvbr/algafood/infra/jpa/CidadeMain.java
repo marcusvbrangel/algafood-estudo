@@ -70,7 +70,7 @@ public class CidadeMain {
         cidade = new Cidade();
         cidade.setId(2L);
 
-        cidadeRepository.remover(cidade);
+        cidadeRepository.excluir(cidade);
 
         System.out.println("\n******************************************************************");
         System.out.println("Cidade - listar (novamente) \n");

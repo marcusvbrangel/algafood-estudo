@@ -1,14 +1,20 @@
 package com.mvbr.algafood.infra.api.controller;
 
+import com.mvbr.algafood.domain.exception.EntidadeEmUsoException;
+import com.mvbr.algafood.domain.exception.EntidadeExistenteException;
+import com.mvbr.algafood.domain.exception.EntidadeNaoEncontradaException;
+import com.mvbr.algafood.domain.model.Cozinha;
 import com.mvbr.algafood.domain.model.Estado;
 import com.mvbr.algafood.domain.repository.EstadoRepository;
+import com.mvbr.algafood.domain.service.CozinhaService;
+import com.mvbr.algafood.domain.service.EstadoService;
+import com.mvbr.algafood.infra.dto.CozinhasXmlWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -16,23 +22,75 @@ import java.util.List;
 public class EstadoController {
 
     @Autowired
-    private EstadoRepository estadoRepository;
+    private EstadoService estadoService;
 
-    @GetMapping
-    public List<Estado> listar() {
-        return estadoRepository.listar();
-    }
+    @RequestMapping("/{estadoId}")
+    public ResponseEntity<?> buscar(@PathVariable("estadoId") Long id) {
 
-    @RequestMapping("/{id}")
-    public ResponseEntity<Estado> buscar(@PathVariable Long id) {
-
-        Estado estado = estadoRepository.buscar(id);
-
-        if (estado != null) {
+        try {
+            Estado estado = estadoService.buscar(id);
             return ResponseEntity.ok(estado);
+
+        } catch (EntidadeNaoEncontradaException e) {
+            System.out.println("Estado buscar: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
 
-        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Estado> listar() {
+        return estadoService.listar();
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<?> criar(@RequestBody Estado estado) {
+
+        try {
+            estado = estadoService.criar(estado);
+            return ResponseEntity.status(HttpStatus.CREATED).body(estado);
+
+        } catch (EntidadeExistenteException e) {
+            System.out.println("Estado criar: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
+
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody Estado estado) {
+
+        try {
+            estado = estadoService.atualizar(id, estado);
+            return ResponseEntity.ok(estado);
+
+        } catch (EntidadeNaoEncontradaException e) {
+            System.out.println("Estado atualizar: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+
+        } catch (EntidadeExistenteException e) {
+            System.out.println("Estado atualizar: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
+
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> excluir(@PathVariable Long id) {
+
+        try {
+            estadoService.excluir(id);
+            return ResponseEntity.noContent().build();
+
+        } catch (EntidadeNaoEncontradaException e) {
+            System.out.println("Estado excluir: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+
+        } catch (EntidadeEmUsoException e) {
+            System.out.println("Estado excluir: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
     }
 
 }

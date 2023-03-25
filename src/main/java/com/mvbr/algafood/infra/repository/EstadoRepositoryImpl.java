@@ -1,5 +1,6 @@
 package com.mvbr.algafood.infra.repository;
 
+import com.mvbr.algafood.domain.model.Cozinha;
 import com.mvbr.algafood.domain.model.Estado;
 import com.mvbr.algafood.domain.repository.EstadoRepository;
 import jakarta.persistence.EntityManager;
@@ -33,8 +34,8 @@ public class EstadoRepositoryImpl implements EstadoRepository {
 
     @Transactional
     @Override
-    public void remover(Estado estado) {
-        estado = buscar(estado.getId());
+    public void excluir(Estado estado) {
         manager.remove(estado);
     }
+
 }
