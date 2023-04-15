@@ -101,4 +101,20 @@ public class RestauranteController {
 
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> atualizarParcial(@PathVariable Long id, @RequestBody Restaurante restaurante) {
+        System.out.println(restaurante + " - teste");
+        return ResponseEntity.ok().build();
+    }
+
+
+
+
+
+
+
+
+
+
+
 }
