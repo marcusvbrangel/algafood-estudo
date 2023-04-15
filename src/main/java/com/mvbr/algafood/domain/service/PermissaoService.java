@@ -2,9 +2,7 @@ package com.mvbr.algafood.domain.service;
 
 import com.mvbr.algafood.domain.exception.EntidadeExistenteException;
 import com.mvbr.algafood.domain.exception.EntidadeNaoEncontradaException;
-import com.mvbr.algafood.domain.model.Cidade;
 import com.mvbr.algafood.domain.model.Permissao;
-import com.mvbr.algafood.domain.repository.CidadeRepository;
 import com.mvbr.algafood.domain.repository.PermissaoRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
