@@ -18,34 +18,22 @@ public class CidadeService {
     private CidadeRepository cidadeRepository;
 
     public Cidade buscar(Long id) {
-
-        Cidade cidade = cidadeRepository.buscar(id);
-
-        if (cidade == null) {
-            throw new EntidadeNaoEncontradaException(
-                String.format("Cidade de código %d não pode ser encontrada", id));
-        }
-
-        return cidade;
-
+        return cidadeRepository.findById(id)
+            .orElseThrow(() -> new EntidadeNaoEncontradaException(
+                String.format("Cidade de código %d não pode ser encontrada", id)));
     }
 
     public List<Cidade> listar() {
-        return cidadeRepository.listar();
+        return cidadeRepository.findAll();
     }
 
     public Cidade criar(Cidade cidade) {
 
-        // Aula: 4.30...
-        // Todo: validar se o nome da Cidade foi preenchido...
-        // Todo: validar se o codigo do estado foi preenchido...
-        // Todo: validar se o codigo do estado existe...
-
         try {
-            return cidadeRepository.salvar(cidade);
+            return cidadeRepository.save(cidade);
 
         } catch (DataIntegrityViolationException e) {
-            throw  new EntidadeExistenteException(
+            throw new EntidadeExistenteException(
                 String.format("Cidade de nome %s já existente", cidade.getNome()));
         }
 
@@ -53,18 +41,15 @@ public class CidadeService {
 
     public Cidade atualizar(Long id, Cidade cidade) {
 
-        // Aula: 4.30...
-        // Todo: validar se o nome dd cidade foi preenchido...
-        // Todo: validar se o codigo da Cidade foi preenchido...
-        // Todo: validar se o codigo da Cidade existe...
-
         try {
 
-            Cidade cidadeAtual = cidadeRepository.buscar(id);
+            Cidade cidadeAtual = cidadeRepository.findById(id)
+                .orElseThrow(() -> new EntidadeNaoEncontradaException(
+                    String.format("Cidade de código %d não pode ser encontrada", id)));
 
             BeanUtils.copyProperties(cidade, cidadeAtual, "id");
 
-            return cidadeRepository.salvar(cidadeAtual);
+            return cidadeRepository.save(cidadeAtual);
 
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeExistenteException(
@@ -75,9 +60,11 @@ public class CidadeService {
 
     public void excluir(Long id) {
 
-        Cidade cidade = cidadeRepository.buscar(id);
+        cidadeRepository.findById(id)
+            .orElseThrow(() -> new EntidadeNaoEncontradaException(
+                String.format("Cidade de código %d não pode ser encontrada", id)));
 
-        cidadeRepository.excluir(cidade);
+        cidadeRepository.deleteById(id);
 
     }
 

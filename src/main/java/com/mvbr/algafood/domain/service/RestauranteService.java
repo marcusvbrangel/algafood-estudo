@@ -1,6 +1,5 @@
 package com.mvbr.algafood.domain.service;
 
-import com.mvbr.algafood.domain.exception.EntidadeEmUsoException;
 import com.mvbr.algafood.domain.exception.EntidadeExistenteException;
 import com.mvbr.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.mvbr.algafood.domain.model.Restaurante;
@@ -19,35 +18,22 @@ public class RestauranteService {
     private RestauranteRepository restauranteRepository;
 
     public Restaurante buscar(Long id) {
-
-        Restaurante restaurante = restauranteRepository.buscar(id);
-
-        if (restaurante == null) {
-            throw new EntidadeNaoEncontradaException(
-                String.format("Restaurante de código %d não pode ser encontrado", id));
-        }
-
-        return restaurante;
-
+        return restauranteRepository.findById(id)
+            .orElseThrow(() -> new EntidadeNaoEncontradaException(
+                String.format("Restaurante de código %d não pode ser encontrado", id)));
     }
 
     public List<Restaurante> listar() {
-        return restauranteRepository.listar();
+        return restauranteRepository.findAll();
     }
 
     public Restaurante criar(Restaurante restaurante) {
 
-        // Aula: 4.30...
-        // Todo: validar se o nome do restaurante foi preenchido...
-        // Todo: validar se a taxa do frete foi preenchido...
-        // Todo: validar se o codigo da cozinha foi preenchido...
-        // Todo: validar se o codigo da cozinha existe...
-
         try {
-            return restauranteRepository.salvar(restaurante);
+            return restauranteRepository.save(restaurante);
 
         } catch (DataIntegrityViolationException e) {
-            throw  new EntidadeExistenteException(
+            throw new EntidadeExistenteException(
                 String.format("Restaurante de nome %s já existente", restaurante.getNome()));
         }
 
@@ -55,19 +41,15 @@ public class RestauranteService {
 
     public Restaurante atualizar(Long id, Restaurante restaurante) {
 
-        // Aula: 4.30...
-        // Todo: validar se o nome do restaurante foi preenchido...
-        // Todo: validar se a taxa do frete foi preenchido...
-        // Todo: validar se o codigo da cozinha foi preenchido...
-        // Todo: validar se o codigo da cozinha existe...
-
         try {
 
-            Restaurante restauranteAtual = restauranteRepository.buscar(id);
+            Restaurante restauranteAtual = restauranteRepository.findById(id)
+                .orElseThrow(() -> new EntidadeNaoEncontradaException(
+                    String.format("Restaurante de código %d não pode ser encontrado", id)));
 
             BeanUtils.copyProperties(restaurante, restauranteAtual, "id");
 
-            return restauranteRepository.salvar(restauranteAtual);
+            return restauranteRepository.save(restauranteAtual);
 
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeExistenteException(
@@ -78,9 +60,11 @@ public class RestauranteService {
 
     public void excluir(Long id) {
 
-        Restaurante restaurante = restauranteRepository.buscar(id);
+        restauranteRepository.findById(id)
+            .orElseThrow(() -> new EntidadeNaoEncontradaException(
+                String.format("Restaurante de código %d não pode ser encontrado", id)));
 
-        restauranteRepository.excluir(restaurante);
+        restauranteRepository.deleteById(id);
 
     }
 
