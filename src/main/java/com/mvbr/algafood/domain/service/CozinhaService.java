@@ -8,10 +8,10 @@ import com.mvbr.algafood.domain.repository.CozinhaRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CozinhaService {
@@ -21,31 +21,28 @@ public class CozinhaService {
 
     public Cozinha buscar(Long id) {
 
-        Cozinha cozinha = cozinhaRepository.buscar(id);
+        Optional<Cozinha> cozinha = cozinhaRepository.findById(id);
 
-        if (cozinha == null) {
+        if (cozinha.isEmpty()) {
             throw new EntidadeNaoEncontradaException(
                 String.format("Cozinha de código %d não pode ser encontrada", id));
         }
 
-        return cozinha;
+        return cozinha.get();
 
     }
 
     public List<Cozinha> listar() {
-        return cozinhaRepository.listar();
+        return cozinhaRepository.findAll();
     }
 
     public Cozinha criar(Cozinha cozinha) {
 
-        // Aula: 4.30...
-        // Todo: validar se o nome da cozinha foi preenchido...
-
         try {
-            return cozinhaRepository.salvar(cozinha);
+            return cozinhaRepository.save(cozinha);
 
         } catch (DataIntegrityViolationException e) {
-            throw  new EntidadeExistenteException(
+            throw new EntidadeExistenteException(
                 String.format("Cozinha de nome %s já existente", cozinha.getNome()));
         }
 
@@ -53,16 +50,18 @@ public class CozinhaService {
 
     public Cozinha atualizar(Long id, Cozinha cozinha) {
 
-        // Aula: 4.30...
-        // Todo: validar se o nome da cozinha foi preenchido...
-
         try {
 
-            Cozinha cozinhaAtual = cozinhaRepository.buscar(id);
+            Optional<Cozinha> cozinhaAtual = cozinhaRepository.findById(id);
 
-            BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
+            if (cozinhaAtual.isPresent()) {
+                BeanUtils.copyProperties(cozinha, cozinhaAtual.get(), "id");
+            } else {
+                throw new EntidadeNaoEncontradaException(
+                    String.format("Cozinha de código %d não pode ser encontrada", id));
+            }
 
-            return cozinhaRepository.salvar(cozinhaAtual);
+            return cozinhaRepository.save(cozinhaAtual.get());
 
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeExistenteException(
@@ -75,13 +74,18 @@ public class CozinhaService {
 
         try {
 
-            Cozinha cozinha = cozinhaRepository.buscar(id);
+            Optional<Cozinha> cozinha = cozinhaRepository.findById(id);
 
-            cozinhaRepository.excluir(cozinha);
+            if (cozinha.isPresent()) {
+                cozinhaRepository.deleteById(id);
+            } else {
+                throw new EntidadeNaoEncontradaException(
+                    String.format("Cozinha de código %d não pode ser encontrada", id));
+            }
 
         } catch (DataIntegrityViolationException e) {
-            throw  new EntidadeEmUsoException(
-                    String.format("Cozinha de código %d não pode ser excluída, pois está em uso", id));
+            throw new EntidadeEmUsoException(
+                String.format("Cozinha de código %d não pode ser excluída, pois está em uso", id));
         }
     }
 
