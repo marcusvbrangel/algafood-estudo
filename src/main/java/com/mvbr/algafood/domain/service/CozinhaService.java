@@ -11,7 +11,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CozinhaService {
@@ -20,16 +19,9 @@ public class CozinhaService {
     private CozinhaRepository cozinhaRepository;
 
     public Cozinha buscar(Long id) {
-
-        Optional<Cozinha> cozinha = cozinhaRepository.findById(id);
-
-        if (cozinha.isEmpty()) {
-            throw new EntidadeNaoEncontradaException(
-                String.format("Cozinha de código %d não pode ser encontrada", id));
-        }
-
-        return cozinha.get();
-
+        return cozinhaRepository.findById(id)
+            .orElseThrow(() -> new EntidadeNaoEncontradaException(
+                String.format("Cozinha de código %d não pode ser encontrada", id)));
     }
 
     public List<Cozinha> listar() {
@@ -52,16 +44,13 @@ public class CozinhaService {
 
         try {
 
-            Optional<Cozinha> cozinhaAtual = cozinhaRepository.findById(id);
+            Cozinha cozinhaAtual = cozinhaRepository.findById(id)
+                .orElseThrow(() -> new EntidadeNaoEncontradaException(
+                    String.format("Cozinha de código %d não pode ser encontrada", id)));
 
-            if (cozinhaAtual.isPresent()) {
-                BeanUtils.copyProperties(cozinha, cozinhaAtual.get(), "id");
-            } else {
-                throw new EntidadeNaoEncontradaException(
-                    String.format("Cozinha de código %d não pode ser encontrada", id));
-            }
+            BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
 
-            return cozinhaRepository.save(cozinhaAtual.get());
+            return cozinhaRepository.save(cozinhaAtual);
 
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeExistenteException(
@@ -74,14 +63,11 @@ public class CozinhaService {
 
         try {
 
-            Optional<Cozinha> cozinha = cozinhaRepository.findById(id);
+            cozinhaRepository.findById(id)
+                .orElseThrow(() -> new EntidadeNaoEncontradaException(
+                    String.format("Cozinha de código %d não pode ser encontrada", id)));
 
-            if (cozinha.isPresent()) {
-                cozinhaRepository.deleteById(id);
-            } else {
-                throw new EntidadeNaoEncontradaException(
-                    String.format("Cozinha de código %d não pode ser encontrada", id));
-            }
+            cozinhaRepository.deleteById(id);
 
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeEmUsoException(
