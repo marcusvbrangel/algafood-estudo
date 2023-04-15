@@ -1,5 +1,5 @@
-### Algafood Projeto de Estudo
+## Algafood Projeto de Estudo
 
 ---
-##### 05 - Spring Data JPA
+### 05 - Spring Data JPA
 
