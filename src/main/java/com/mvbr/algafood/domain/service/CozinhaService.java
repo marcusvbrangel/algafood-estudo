@@ -60,11 +60,6 @@ public class CozinhaService {
 
             Cozinha cozinhaAtual = cozinhaRepository.buscar(id);
 
-            if (cozinhaAtual == null) {
-                throw new EntidadeNaoEncontradaException(
-                    String.format("Cozinha de código %d não pode ser encontrada", id));
-            }
-
             BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
 
             return cozinhaRepository.salvar(cozinhaAtual);
@@ -81,11 +76,6 @@ public class CozinhaService {
         try {
 
             Cozinha cozinha = cozinhaRepository.buscar(id);
-
-            if (cozinha == null) {
-                throw new EntidadeNaoEncontradaException(
-                    String.format("Cozinha de código %d não pode ser encontrada", id));
-            }
 
             cozinhaRepository.excluir(cozinha);
 

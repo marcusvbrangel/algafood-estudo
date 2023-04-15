@@ -1,5 +1,6 @@
 package com.mvbr.algafood.infra.api.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mvbr.algafood.domain.exception.EntidadeExistenteException;
 import com.mvbr.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.mvbr.algafood.domain.model.Cidade;
@@ -9,9 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/cidades")
@@ -74,6 +78,32 @@ public class CidadeController {
 
         // Todo: implementar... ResponseEntity.badRequest().build()... para estado nao existente...
 
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> atualizarParcial(@PathVariable Long id, @RequestBody Map<String, Object> campos) {
+
+        //Cidade cidadeAtual = cidadeService.buscar(id);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        Cidade cidadeOrigem = objectMapper.convertValue(campos, Cidade.class);
+
+        System.out.println(campos);
+        System.out.println(cidadeOrigem);
+
+        campos.forEach((atributoNome, atributoValor) -> {
+
+            //System.out.println(atributoNome + " = " + atributoValor);
+
+            //Field field = ReflectionUtils.findField(Cidade.class, atributoNome);
+
+            //field.setAccessible(true);
+
+            //ReflectionUtils.setField(field, cidadeAtual, atributoValor);
+
+        });
+
+        return null; //this.atualizar(id, cidadeAtual);
     }
 
     @DeleteMapping("/{id}")

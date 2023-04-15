@@ -11,10 +11,6 @@ import java.util.List;
 @Component
 public class CadastroCozinha {
 
-    public CadastroCozinha() {
-        System.out.println("Running standalone... " + this.getClass().getSimpleName());
-    }
-
     @PersistenceContext
     private EntityManager manager;
 

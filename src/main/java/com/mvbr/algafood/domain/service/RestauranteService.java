@@ -65,11 +65,6 @@ public class RestauranteService {
 
             Restaurante restauranteAtual = restauranteRepository.buscar(id);
 
-            if (restauranteAtual == null) {
-                throw new EntidadeNaoEncontradaException(
-                    String.format("Restaurante de código %d não pode ser encontrado", id));
-            }
-
             BeanUtils.copyProperties(restaurante, restauranteAtual, "id");
 
             return restauranteRepository.salvar(restauranteAtual);
@@ -84,11 +79,6 @@ public class RestauranteService {
     public void excluir(Long id) {
 
         Restaurante restaurante = restauranteRepository.buscar(id);
-
-        if (restaurante == null) {
-            throw new EntidadeNaoEncontradaException(
-                String.format("Restaurante de código %d não pode ser encontrado", id));
-        }
 
         restauranteRepository.excluir(restaurante);
 

@@ -62,11 +62,6 @@ public class CidadeService {
 
             Cidade cidadeAtual = cidadeRepository.buscar(id);
 
-            if (cidadeAtual == null) {
-                throw new EntidadeNaoEncontradaException(
-                    String.format("Cidade de código %d não pode ser encontrada", id));
-            }
-
             BeanUtils.copyProperties(cidade, cidadeAtual, "id");
 
             return cidadeRepository.salvar(cidadeAtual);
@@ -81,11 +76,6 @@ public class CidadeService {
     public void excluir(Long id) {
 
         Cidade cidade = cidadeRepository.buscar(id);
-
-        if (cidade == null) {
-            throw new EntidadeNaoEncontradaException(
-                String.format("Cidade de código %d não pode ser encontrada", id));
-        }
 
         cidadeRepository.excluir(cidade);
 

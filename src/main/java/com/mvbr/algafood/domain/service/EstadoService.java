@@ -61,11 +61,6 @@ public class EstadoService {
 
             Estado estadoAtual = estadoRepository.buscar(id);
 
-            if (estadoAtual == null) {
-                throw new EntidadeNaoEncontradaException(
-                    String.format("Estado de código %d não pode ser encontrado", id));
-            }
-
             BeanUtils.copyProperties(estado, estadoAtual, "id");
 
             return estadoRepository.salvar(estadoAtual);
@@ -82,11 +77,6 @@ public class EstadoService {
         try {
 
             Estado estado = estadoRepository.buscar(id);
-
-            if (estado == null) {
-                throw new EntidadeNaoEncontradaException(
-                    String.format("Estado de código %d não pode ser encontrado", id));
-            }
 
             estadoRepository.excluir(estado);
 
