@@ -49,4 +49,11 @@ public class TestController {
 
     }
 
+    @GetMapping("/restaurantes/primeiro")
+    public Optional<Restaurante> restaurantePrimeiro() {
+
+        return restauranteRepository.buscarPrimeiroRegistroEncontrado();
+
+    }
+
 }
