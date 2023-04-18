@@ -1,6 +1,7 @@
 package com.mvbr.algafood.infra.repository;
 
 import com.mvbr.algafood.domain.model.Restaurante;
+import com.mvbr.algafood.domain.repository.RestauranteRepository;
 import com.mvbr.algafood.domain.repository.RestauranteRepositoryQueries;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -9,6 +10,8 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
@@ -16,11 +19,18 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.mvbr.algafood.infra.repository.specification.RestaurantesSpecs.comFreteGratis;
+import static com.mvbr.algafood.infra.repository.specification.RestaurantesSpecs.comNomeSemelhante;
+
 @Repository
 public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Autowired
+    @Lazy
+    private RestauranteRepository restauranteRepository;
 
     @Override
     public List<Restaurante> consultar(String nome, BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal) {
@@ -63,6 +73,13 @@ public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
         TypedQuery<Restaurante> query = entityManager.createQuery(criteria);
 
         return query.getResultList();
+
+    }
+
+    @Override
+    public List<Restaurante> consultarComFreteGratis(String nome) {
+
+        return restauranteRepository.findAll(comFreteGratis().and(comNomeSemelhante(nome)));
 
     }
 
