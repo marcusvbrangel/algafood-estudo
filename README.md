@@ -1,5 +1,5 @@
-## Algafood Projeto de Estudo
+## Algafood Study Project
 
 ---
-### 05 - Spring Data JPA
+### 06 - Exploring more of JPA and Hibernate
 
