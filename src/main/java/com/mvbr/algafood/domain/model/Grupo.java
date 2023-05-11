@@ -5,11 +5,14 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString(onlyExplicitlyIncluded = true)
 @Entity
-public class Permissao {
+public class Grupo {
 
     @EqualsAndHashCode.Include
     @Id
@@ -20,7 +23,10 @@ public class Permissao {
     @Column(length = 50, nullable = false)
     private String nome;
 
-    @Column(length = 200, nullable = true)
-    private String descricao;
+    @ManyToMany
+    @JoinTable(name = "grupo_permissao",
+        joinColumns = @JoinColumn(name = "grupo_id"),
+        inverseJoinColumns = @JoinColumn(name = "permissao_id"))
+    private List<Permissao> permissoes = new ArrayList<>();
 
 }

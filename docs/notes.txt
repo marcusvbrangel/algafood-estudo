@@ -1,6 +1,27 @@
 
 -------------------------------------------------
 
+/*
+CTRL + ALT + L
+CTRL + ALT + O
+CTRL + ALT + I
+TAB / SHIFT + TAB
+CTRL + D
+CTRL + Y
+SHIFT + ENTER
+CTRL + /
+CTRL + SHIFT + /
+
+CTRL + SHIFT + CIMA / BAIXO
+ALT + SHIFT + CLIQUE DO MOUSE
+CTRL + J
+
+ALT + ENTER
+ */
+
+
+-------------------------------------------------
+
  java -jar target/algafood-estudo-0.0.1-SNAPSHOT.jar -Dspring.profiles.active=prod
 
 -------------------------------------------------
@@ -142,7 +163,13 @@ https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-me
 
 -------------------------------------------------
 
+JPA
 
+default:
+
+*ToOne -> eager
+
+*ToMany -> lazy
 
 -------------------------------------------------
 

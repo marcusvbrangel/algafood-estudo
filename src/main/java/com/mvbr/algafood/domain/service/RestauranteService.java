@@ -47,7 +47,8 @@ public class RestauranteService {
                 .orElseThrow(() -> new EntidadeNaoEncontradaException(
                     String.format("Restaurante de código %d não pode ser encontrado", id)));
 
-            BeanUtils.copyProperties(restaurante, restauranteAtual, "id");
+            BeanUtils.copyProperties(restaurante, restauranteAtual,
+                "id", "formasPagamentto", "endereco", "dataCadastro");
 
             return restauranteRepository.save(restauranteAtual);
 

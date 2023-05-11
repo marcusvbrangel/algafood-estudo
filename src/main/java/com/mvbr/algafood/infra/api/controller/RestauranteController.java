@@ -22,6 +22,8 @@ public class RestauranteController {
     @RequestMapping("/{restauranteId}")
     public ResponseEntity<?> buscar(@PathVariable("restauranteId") Long id) {
 
+        System.out.println("restaurante id: + id");
+
         try {
             Restaurante restaurante = restauranteService.buscar(id);
             return ResponseEntity.ok(restaurante);
@@ -30,17 +32,6 @@ public class RestauranteController {
             System.out.println("Restaurante buscar: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
-
-//        return ResponseEntity.status(HttpStatus.OK).body(cozinha);
-//        return  ResponseEntity.ok(cozinha);
-//        return cozinhaRepository.buscar(id);
-
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.add(HttpHeaders.LOCATION, "http://localhost:8080/cozinhas");
-//        return ResponseEntity
-//                .status(HttpStatus.FOUND)
-//                .headers(headers)
-//                .build();
 
     }
 
@@ -62,8 +53,6 @@ public class RestauranteController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
 
-        // Todo: implementar... ResponseEntity.badRequest().build()... para cozinha nao existente...
-
     }
 
     @PutMapping("/{id}")
@@ -81,8 +70,6 @@ public class RestauranteController {
             System.out.println("Restaurante atualizar: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
-
-        // Todo: implementar... ResponseEntity.badRequest().build()... para cozinha nao existente...
 
     }
 
@@ -106,15 +93,5 @@ public class RestauranteController {
         System.out.println(restaurante + " - teste");
         return ResponseEntity.ok().build();
     }
-
-
-
-
-
-
-
-
-
-
 
 }
