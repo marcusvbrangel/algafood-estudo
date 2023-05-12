@@ -1,0 +1,12 @@
+insert into cidade (nome_cidade, nome_estado) values ('Rio de Janeiro', 'Rio de Janeiro');
+insert into cidade (nome_cidade, nome_estado) values ('Cabo Frio', 'Rio de Janeiro');
+insert into cidade (nome_cidade, nome_estado) values ('Niteroi', 'Rio de Janeiro');
+insert into cidade (nome_cidade, nome_estado) values ('Linhares', 'Espirito Santo');
+insert into cidade (nome_cidade, nome_estado) values ('Marataizes', 'Espirito Santo');
+insert into cidade (nome_cidade, nome_estado) values ('Vila Velha', 'Espirito Santo');
+insert into cidade (nome_cidade, nome_estado) values ('Belo Horizonte', 'Minas Gerais');
+insert into cidade (nome_cidade, nome_estado) values ('Juiz de Fora', 'Minas Gerais');
+insert into cidade (nome_cidade, nome_estado) values ('Uberlândia', 'Minas Gerais');
+insert into cidade (nome_cidade, nome_estado) values ('São Paulo', 'São Paulo');
+insert into cidade (nome_cidade, nome_estado) values ('Campinas', 'São Paulo');
+insert into cidade (nome_cidade, nome_estado) values ('Ribeirão Preto', 'São Paulo');
