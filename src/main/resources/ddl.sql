@@ -8,7 +8,7 @@ create table permissao (id bigserial not null, descricao varchar(200), nome varc
 create table produto (id bigserial not null, ativo boolean not null, nome varchar(50) not null, preco numeric(38,2) not null, restaurante_id bigint not null, primary key (id));
 create table restaurante (id bigserial not null, data_atualizacao timestamp(6) not null, data_cadastro timestamp(6) not null, endereco_bairro varchar(255), endereco_cep varchar(255), endereco_complemento varchar(255), endereco_logradouro varchar(255), endereco_numero varchar(255), nome varchar(50) not null, taxa_frete numeric(38,2) not null, cozinha_id bigint not null, endereco_cidade_id bigint, primary key (id));
 create table restaurante_forma_pagamento (restaurante_id bigint not null, forma_pagamento_id bigint not null);
-create table usuario (id bigserial not null, data_atualizacao timestamp(6) not null, data_cadastro timestamp(6) not null, nome varchar(50) not null, senha varchar(20) not null, primary key (id));
+create table usuario (id bigserial not null, data_atualizacao timestamp(6) not null, data_cadastro timestamp(6) not null, email varchar(50) not null, nome varchar(50) not null, senha varchar(20) not null, primary key (id));
 create table usuario_grupo (usuario_id bigint not null, grupo_id bigint not null);
 alter table if exists cozinha add constraint UK_21inunwxqp3wdrnbji4sp1vli unique (nome);
 alter table if exists estado add constraint UK_gfot2y0318rs8hc74ppp0n87p unique (nome);
