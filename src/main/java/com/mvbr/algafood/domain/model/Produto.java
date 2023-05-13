@@ -23,6 +23,8 @@ public class Produto {
     @Column(length = 50, nullable = false)
     private String nome;
 
+    private String descricao;
+
     @Column(nullable = false)
     private BigDecimal preco;
 
@@ -30,7 +32,7 @@ public class Produto {
     private boolean ativo;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
     private Restaurante restaurante;
 
