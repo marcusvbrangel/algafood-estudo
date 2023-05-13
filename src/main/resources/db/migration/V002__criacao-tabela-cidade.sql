@@ -1,5 +1,5 @@
 create table cidade(
-  id serial,
+  id bigserial,
   nome_cidade varchar(60),
   nome_estado varchar(60)
 );

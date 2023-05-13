@@ -1,6 +1,6 @@
 
 create table estado(
-  id serial,
+  id bigserial,
   nome varchar(60)
 );
 

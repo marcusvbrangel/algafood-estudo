@@ -1,6 +1,6 @@
 
 create table cozinha(
-  id serial,
+  id bigserial,
   nome varchar(60)
 );
 
