@@ -180,7 +180,20 @@ https://www.postgresql.org/docs/14/index.html
 
 -------------------------------------------------
 
+F L Y W A Y
 
+7.11. Reparando migrações com erros:
+
+    ./mvnw flyway: repair -Dflyway.configFiles=src/main/resources/flyway.properties
+
+
+[ERROR] Could not find goal '' in plugin org.flywaydb:flyway-maven-plugin:9.5.1 among available goals baseline, clean, info, migrate, repair, undo, validate -> [Help 1]
+[ERROR]
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR]
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoNotFoundException
 
 
 -------------------------------------------------

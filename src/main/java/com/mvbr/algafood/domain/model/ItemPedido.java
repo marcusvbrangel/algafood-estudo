@@ -15,7 +15,6 @@ public class ItemPedido {
 
     @EqualsAndHashCode.Include
     @EmbeddedId
-    @Id
     private ItemPedidoID itemPedidoID;
 
     private int quantidade;
