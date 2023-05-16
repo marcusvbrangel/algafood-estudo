@@ -198,10 +198,36 @@ F L Y W A Y
 
 -------------------------------------------------
 
+select pg_get_serial_sequence('cozinha', 'id');
+
+    public.cidade_id_seq
 
 
 -------------------------------------------------
 
+delete from cozinha;
+/
+select pg_get_serial_sequence('usuario', 'id');
+/
+ALTER TABLE cidade ALTER COLUMN id RESTART WITH 1;
+/
+ALTER SEQUENCE public.public.cozinha_id_seq RESTART WITH 1;
+/
+select * from cidade;
+select * from cozinha;
+select * from estado;
+select * from forma_pagamento;
+select * from foto_produto;
+select * from grupo;
+select * from grupo_permissao;
+select * from item_pedido;
+select * from pedido;
+select * from permissao;
+select * from produto;
+select * from restaurante;
+select * from restaurante_forma_pagamento;
+select * from usuario;
+select * from usuario_grupo;
 
 
 -------------------------------------------------
