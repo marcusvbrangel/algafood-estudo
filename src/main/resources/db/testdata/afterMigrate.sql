@@ -1,23 +1,24 @@
 
-SET CONSTRAINTS ALL DEFERRED;
+-- SET CONSTRAINTS ALL DEFERRED;
 
-BEGIN;
+-- BEGIN;
 
-delete from cidade;
-delete from cozinha;
-delete from estado;
-delete from forma_pagamento;
-delete from foto_produto;
-delete from grupo;
-delete from permissao;
-delete from grupo_permissao;
 delete from item_pedido;
 delete from pedido;
 delete from produto;
-delete from restaurante;
+delete from foto_produto;
 delete from restaurante_forma_pagamento;
+delete from forma_pagamento;
+delete from restaurante;
+delete from cozinha;
+delete from cidade;
+delete from estado;
 delete from usuario;
 delete from usuario_grupo;
+delete from permissao;
+delete from grupo;
+delete from grupo_permissao;
+
 
 ALTER SEQUENCE public.cidade_id_seq RESTART WITH 1;
 ALTER SEQUENCE public.cozinha_id_seq RESTART WITH 1;
@@ -75,5 +76,5 @@ insert into produto (nome, preco, ativo, restaurante_id) values ('Frango', 200.0
 insert into produto (nome, preco, ativo, restaurante_id) values ('Vinho', 188.10, true, 2);
 insert into produto (nome, preco, ativo, restaurante_id) values ('Arroz', 33.54, false, 3);
 
-COMMIT;
+-- COMMIT;
 

@@ -1,5 +1,5 @@
 ## Algafood Study Project
 
 ---
-### 06 - Exploring more of JPA and Hibernate
+### 08 - Tratamento e Modelagem de Erros da API
 
