@@ -53,8 +53,6 @@ public class CidadeController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
 
-        // Todo: implementar... ResponseEntity.badRequest().build()... para estado nao existente...
-
     }
 
     @PutMapping("/{id}")
@@ -72,8 +70,6 @@ public class CidadeController {
             System.out.println("Cidade atualizar: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
-
-        // Todo: implementar... ResponseEntity.badRequest().build()... para estado nao existente...
 
     }
 

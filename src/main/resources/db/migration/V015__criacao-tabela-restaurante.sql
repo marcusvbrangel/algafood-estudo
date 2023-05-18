@@ -18,6 +18,8 @@ alter table restaurante add constraint pk_restaurante primary key (id);
 
 create index idx_restaurante_nome on restaurante (nome);
 
+alter table restaurante add constraint uk_restaurante_nome unique (nome);
+
 alter table restaurante add constraint fk_restaurante_cozinha foreign key (cozinha_id) references cozinha;
 alter table restaurante add constraint fk_restaurante_endereco_cidade foreign key (endereco_cidade_id) references cidade;
 
