@@ -15,13 +15,17 @@ import java.util.List;
 @Service
 public class CozinhaService {
 
+    private static final String MSG_COZINHA_NAO_ENCONTRADA = "Cozinha de código %d não pode ser encontrada";
+    private static final String MSG_COZINHA_EXISTENTE = "Cozinha de nome %s já existente";
+    private static final String MSG_COZINHA_EM_USO = "Cozinha de código %d não pode ser excluída, pois está em uso";
+
     @Autowired
     private CozinhaRepository cozinhaRepository;
 
     public Cozinha buscar(Long id) {
         return cozinhaRepository.findById(id)
             .orElseThrow(() -> new EntidadeNaoEncontradaException(
-                String.format("Cozinha de código %d não pode ser encontrada", id)));
+                String.format(MSG_COZINHA_NAO_ENCONTRADA, id)));
     }
 
     public List<Cozinha> listar() {
@@ -35,43 +39,109 @@ public class CozinhaService {
 
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeExistenteException(
-                String.format("Cozinha de nome %s já existente", cozinha.getNome()));
+                String.format(MSG_COZINHA_EXISTENTE, cozinha.getNome()));
         }
 
     }
+
+//    public Cozinha atualizar(Long id, Cozinha cozinha) {
+//
+//        try {
+//
+//            Cozinha cozinhaAtual = cozinhaRepository.findById(id)
+//                .orElseThrow(() -> new EntidadeNaoEncontradaException(
+//                    String.format(MSG_COZINHA_NAO_ENCONTRADA, id)));
+//
+//            BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
+//
+//            return cozinhaRepository.save(cozinhaAtual);
+//
+//        } catch (DataIntegrityViolationException e) {
+//            throw new EntidadeExistenteException(
+//                String.format(MSG_COZINHA_EXISTENTE, cozinha.getNome()));
+//        }
+//
+//    }
 
     public Cozinha atualizar(Long id, Cozinha cozinha) {
 
         try {
-
-            Cozinha cozinhaAtual = cozinhaRepository.findById(id)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException(
-                    String.format("Cozinha de código %d não pode ser encontrada", id)));
-
+            Cozinha cozinhaAtual = this.buscar(id);
             BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
-
             return cozinhaRepository.save(cozinhaAtual);
 
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeExistenteException(
-                String.format("Cozinha de nome %s já existente", cozinha.getNome()));
+                String.format(MSG_COZINHA_EXISTENTE, cozinha.getNome()));
         }
 
     }
 
+//    public void excluir(Long id) {
+//
+//        try {
+//
+//            cozinhaRepository.findById(id)
+//                .orElseThrow(() -> new EntidadeNaoEncontradaException(
+//                    String.format("Cozinha de código %d não pode ser encontrada", id)));
+//
+//            cozinhaRepository.deleteById(id);
+//
+//        } catch (DataIntegrityViolationException e) {
+//            throw new EntidadeEmUsoException(
+//                String.format("Cozinha de código %d não pode ser excluída, pois está em uso", id));
+//        }
+//    }
+
+//    public void excluir(Long id) {
+//
+//        try {
+//            cozinhaRepository.deleteById(id);
+//
+//        } catch (EmptyResultDataAccessException e) {
+//            throw new EntidadeNaoEncontradaException(
+//                String.format("Cozinha de código %d não pode ser encontrada", id));
+//
+//        } catch (DataIntegrityViolationException e) {
+//            throw new EntidadeEmUsoException(
+//                String.format("Cozinha de código %d não pode ser excluída, pois está em uso", id));
+//
+//        }
+//    }
+
+//    public void excluir(Long id) {
+//
+//        try {
+//
+//            Cozinha cozinha = this.buscar(id);
+//
+//            cozinhaRepository.delete(cozinha);
+//
+//        } catch (EntidadeNaoEncontradaException e) {
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+//                String.format("Cozinha de código %d não pode ser encontrada", id));
+//
+//        } catch (DataIntegrityViolationException e) {
+//            throw new ResponseStatusException(HttpStatus.CONFLICT,
+//                String.format("Cozinha de código %d não pode ser excluída, pois está em uso", id));
+//
+//        }
+//    }
+
     public void excluir(Long id) {
 
         try {
+            Cozinha cozinha = this.buscar(id);
+            cozinhaRepository.delete(cozinha);
 
-            cozinhaRepository.findById(id)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException(
-                    String.format("Cozinha de código %d não pode ser encontrada", id)));
-
-            cozinhaRepository.deleteById(id);
+        } catch (EntidadeNaoEncontradaException e) {
+            throw new EntidadeNaoEncontradaException(
+                String.format(MSG_COZINHA_NAO_ENCONTRADA, id));
 
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeEmUsoException(
-                String.format("Cozinha de código %d não pode ser excluída, pois está em uso", id));
+                String.format(MSG_COZINHA_EM_USO, id));
+
         }
     }
 

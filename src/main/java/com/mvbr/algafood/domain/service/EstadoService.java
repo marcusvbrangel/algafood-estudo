@@ -15,13 +15,17 @@ import java.util.List;
 @Service
 public class EstadoService {
 
+    private static final String MSG_ESTADO_NAO_ENCONTRADO = "Estado de código %d não pode ser encontrado";
+    private static final String MSG_ESTADO_EXISTENTE = "Estado de nome %s já existente";
+    private static final String MSG_ESTADO_EM_USO = "Estado de código %d não pode ser excluído, pois está em uso";
+
     @Autowired
     private EstadoRepository estadoRepository;
 
     public Estado buscar(Long id) {
         return estadoRepository.findById(id)
             .orElseThrow(() -> new EntidadeNaoEncontradaException(
-                String.format("Estado de código %d não pode ser encontrado", id)));
+                String.format(MSG_ESTADO_NAO_ENCONTRADO, id)));
     }
 
     public List<Estado> listar() {
@@ -29,13 +33,12 @@ public class EstadoService {
     }
 
     public Estado criar(Estado estado) {
-
         try {
             return estadoRepository.save(estado);
 
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeExistenteException(
-                String.format("Estado de nome %s já existente", estado.getNome()));
+                String.format(MSG_ESTADO_EXISTENTE, estado.getNome()));
         }
 
     }
@@ -43,18 +46,13 @@ public class EstadoService {
     public Estado atualizar(Long id, Estado estado) {
 
         try {
-
-            Estado estadoAtual = estadoRepository.findById(id)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException(
-                    String.format("Estado de código %d não pode ser encontrado", id)));
-
+            Estado estadoAtual = this.buscar(id);
             BeanUtils.copyProperties(estado, estadoAtual, "id");
-
             return estadoRepository.save(estadoAtual);
 
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeExistenteException(
-                String.format("Estado de nome %s já existente", estado.getNome()));
+                String.format(MSG_ESTADO_EXISTENTE, estado.getNome()));
         }
 
     }
@@ -62,17 +60,19 @@ public class EstadoService {
     public void excluir(Long id) {
 
         try {
+            Estado estado = this.buscar(id);
+            estadoRepository.delete(estado);
 
-            estadoRepository.findById(id)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException(
-                    String.format("Estado de código %d não pode ser encontrado", id)));
-
-            estadoRepository.deleteById(id);
+        } catch (EntidadeNaoEncontradaException e) {
+            throw new EntidadeNaoEncontradaException(
+                String.format(MSG_ESTADO_NAO_ENCONTRADO, id));
 
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeEmUsoException(
-                String.format("Estado de código %d não pode ser excluído, pois está em uso", id));
+                String.format(MSG_ESTADO_EM_USO, id));
+
         }
+
     }
 
 }
