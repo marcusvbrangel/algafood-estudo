@@ -1,36 +1,24 @@
 package com.mvbr.algafood.infra.api.controller;
 
-import com.mvbr.algafood.domain.exception.EntidadeExistenteException;
-import com.mvbr.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.mvbr.algafood.domain.model.FormaPagamento;
 import com.mvbr.algafood.domain.service.FormaPagamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/forma-pagamento")
+@RequestMapping("/api/v1/formas-pagamento")
 public class FormaPagamentoController {
 
     @Autowired
     private FormaPagamentoService formaPagamentoService;
 
     @RequestMapping("/{id}")
-    public ResponseEntity<?> buscar(@PathVariable("id") Long id) {
-
-        try {
-            FormaPagamento formaPagamento = formaPagamentoService.buscar(id);
-            return ResponseEntity.ok(formaPagamento);
-
-        } catch (EntidadeNaoEncontradaException e) {
-            System.out.println("Forma pagamento buscar: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-
+    public FormaPagamento buscar(@PathVariable("id") Long id) {
+        return formaPagamentoService.buscar(id);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -40,50 +28,19 @@ public class FormaPagamentoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> criar(@RequestBody FormaPagamento formaPagamento) {
-
-        try {
-            formaPagamento = formaPagamentoService.criar(formaPagamento);
-            return ResponseEntity.status(HttpStatus.CREATED).body(formaPagamento);
-
-        } catch (EntidadeExistenteException e) {
-            System.out.println("Forma pagamento criar: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-        }
-
+    public FormaPagamento criar(@RequestBody FormaPagamento formaPagamento) {
+        return formaPagamentoService.criar(formaPagamento);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody FormaPagamento formaPagamento) {
-
-        try {
-            formaPagamento = formaPagamentoService.atualizar(id, formaPagamento);
-            return ResponseEntity.ok(formaPagamento);
-
-        } catch (EntidadeNaoEncontradaException e) {
-            System.out.println("Forma pagamento atualizar: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-
-        } catch (EntidadeExistenteException e) {
-            System.out.println("Forma pagamento atualizar: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-        }
-
+    public FormaPagamento atualizar(@PathVariable Long id, @RequestBody FormaPagamento formaPagamento) {
+        return formaPagamentoService.atualizar(id, formaPagamento);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> excluir(@PathVariable Long id) {
-
-        try {
-            formaPagamentoService.excluir(id);
-            return ResponseEntity.noContent().build();
-
-        } catch (EntidadeNaoEncontradaException e) {
-            System.out.println("Forma pagamento excluir: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-
-        }
-
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void excluir(@PathVariable Long id) {
+        formaPagamentoService.excluir(id);
     }
 
 }
