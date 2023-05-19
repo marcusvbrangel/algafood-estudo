@@ -6,7 +6,6 @@ import com.mvbr.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.mvbr.algafood.domain.model.Restaurante;
 import com.mvbr.algafood.domain.repository.RestauranteRepository;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +14,15 @@ import java.util.List;
 @Service
 public class RestauranteService {
 
+    private final RestauranteRepository restauranteRepository;
+
+    public RestauranteService(RestauranteRepository restauranteRepository) {
+        this.restauranteRepository = restauranteRepository;
+    }
+
     private static final String MSG_RESTAURANTE_NAO_ENCONTRADO = "Restaurante de código %d não pode ser encontrado";
     private static final String MSG_RESTAURANTE_EXISTENTE = "Restaurante de nome %s já existente";
     private static final String MSG_RESTAURANTE_EM_USO = "Restaurante de código %d não pode ser excluído, pois está em uso";
-
-    @Autowired
-    private RestauranteRepository restauranteRepository;
 
     public Restaurante buscar(Long id) {
         return restauranteRepository.findById(id)

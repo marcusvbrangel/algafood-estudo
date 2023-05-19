@@ -6,7 +6,6 @@ import com.mvbr.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.mvbr.algafood.domain.model.FormaPagamento;
 import com.mvbr.algafood.domain.repository.FormaPagamentoRepository;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +14,15 @@ import java.util.List;
 @Service
 public class FormaPagamentoService {
 
+    private final FormaPagamentoRepository formaPagamentoRepository;
+
+    public FormaPagamentoService(FormaPagamentoRepository formaPagamentoRepository) {
+        this.formaPagamentoRepository = formaPagamentoRepository;
+    }
+
     private static final String MSG_FORMA_DE_PAGAMENTO_NAO_ENCONTRADA = "Forma de Pagamento de código %d não pode ser encontrada";
     private static final String MSG_FORMA_DE_PAGAMENTO_EXISTENTE = "Forma de Pagamento de nome %s já existente";
     private static final String MSG_FORMA_DE_PAGAMENTO_EM_USO = "Forma de Pagamento de código %d não pode ser excluída, pois está em uso";
-
-    @Autowired
-    private FormaPagamentoRepository formaPagamentoRepository;
 
     public FormaPagamento buscar(Long id) {
         return formaPagamentoRepository.findById(id)

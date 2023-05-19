@@ -2,7 +2,6 @@ package com.mvbr.algafood.infra.api.controller;
 
 import com.mvbr.algafood.domain.model.Cidade;
 import com.mvbr.algafood.domain.service.CidadeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -10,18 +9,23 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/cidades")
+@RequestMapping(value = "/api/v1/cidades",
+    produces = MediaType.APPLICATION_JSON_VALUE,
+    consumes = MediaType.APPLICATION_JSON_VALUE)
 public class CidadeController {
 
-    @Autowired
-    private CidadeService cidadeService;
+    private final CidadeService cidadeService;
 
-    @RequestMapping("/{cidadeId}")
+    public CidadeController(CidadeService cidadeService) {
+        this.cidadeService = cidadeService;
+    }
+
+    @GetMapping("/{cidadeId}")
     public Cidade buscar(@PathVariable("cidadeId") Long id) {
         return cidadeService.buscar(id);
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping
     public List<Cidade> listar() {
         return cidadeService.listar();
     }

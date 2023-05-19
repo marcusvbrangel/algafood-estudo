@@ -2,7 +2,6 @@ package com.mvbr.algafood.infra.api.controller;
 
 import com.mvbr.algafood.domain.model.Permissao;
 import com.mvbr.algafood.domain.service.PermissaoService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -10,18 +9,23 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/permissoes")
+@RequestMapping(value = "/api/v1/permissoes",
+    produces = MediaType.APPLICATION_JSON_VALUE,
+    consumes = MediaType.APPLICATION_JSON_VALUE)
 public class PermissaoController {
 
-    @Autowired
-    private PermissaoService permissaoService;
+    private final PermissaoService permissaoService;
 
-    @RequestMapping("/{id}")
+    public PermissaoController(PermissaoService permissaoService) {
+        this.permissaoService = permissaoService;
+    }
+
+    @GetMapping("/{id}")
     public Permissao buscar(@PathVariable("id") Long id) {
         return permissaoService.buscar(id);
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping
     public List<Permissao> listar() {
         return permissaoService.listar();
     }

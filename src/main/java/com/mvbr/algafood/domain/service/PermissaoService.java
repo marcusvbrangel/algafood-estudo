@@ -6,7 +6,6 @@ import com.mvbr.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.mvbr.algafood.domain.model.Permissao;
 import com.mvbr.algafood.domain.repository.PermissaoRepository;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +14,15 @@ import java.util.List;
 @Service
 public class PermissaoService {
 
+    private final PermissaoRepository permissaoRepository;
+
+    public PermissaoService(PermissaoRepository permissaoRepository) {
+        this.permissaoRepository = permissaoRepository;
+    }
+
     private static final String MSG_PERMISSAO_NAO_ENCONTRADA = "Permissão de código %d não pode ser encontrada";
     private static final String MSG_PERMISSAO_EXISTENTE = "Permissão de nome %s já existente";
     private static final String MSG_PERMISSAO_EM_USO = "Permissão de código %d não pode ser excluída, pois está em uso";
-
-    @Autowired
-    private PermissaoRepository permissaoRepository;
 
     public Permissao buscar(Long id) {
         return permissaoRepository.findById(id)

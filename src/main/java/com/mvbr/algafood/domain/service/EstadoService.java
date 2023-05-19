@@ -6,7 +6,6 @@ import com.mvbr.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.mvbr.algafood.domain.model.Estado;
 import com.mvbr.algafood.domain.repository.EstadoRepository;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +14,15 @@ import java.util.List;
 @Service
 public class EstadoService {
 
+    private final EstadoRepository estadoRepository;
+
+    public EstadoService(EstadoRepository estadoRepository) {
+        this.estadoRepository = estadoRepository;
+    }
+
     private static final String MSG_ESTADO_NAO_ENCONTRADO = "Estado de código %d não pode ser encontrado";
     private static final String MSG_ESTADO_EXISTENTE = "Estado de nome %s já existente";
     private static final String MSG_ESTADO_EM_USO = "Estado de código %d não pode ser excluído, pois está em uso";
-
-    @Autowired
-    private EstadoRepository estadoRepository;
 
     public Estado buscar(Long id) {
         return estadoRepository.findById(id)

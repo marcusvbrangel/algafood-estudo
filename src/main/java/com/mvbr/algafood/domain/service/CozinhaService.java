@@ -6,7 +6,6 @@ import com.mvbr.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.mvbr.algafood.domain.model.Cozinha;
 import com.mvbr.algafood.domain.repository.CozinhaRepository;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +14,15 @@ import java.util.List;
 @Service
 public class CozinhaService {
 
+    private final CozinhaRepository cozinhaRepository;
+
+    public CozinhaService(CozinhaRepository cozinhaRepository) {
+        this.cozinhaRepository = cozinhaRepository;
+    }
+
     private static final String MSG_COZINHA_NAO_ENCONTRADA = "Cozinha de código %d não pode ser encontrada";
     private static final String MSG_COZINHA_EXISTENTE = "Cozinha de nome %s já existente";
     private static final String MSG_COZINHA_EM_USO = "Cozinha de código %d não pode ser excluída, pois está em uso";
-
-    @Autowired
-    private CozinhaRepository cozinhaRepository;
 
     public Cozinha buscar(Long id) {
         return cozinhaRepository.findById(id)
@@ -141,7 +143,6 @@ public class CozinhaService {
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeEmUsoException(
                 String.format(MSG_COZINHA_EM_USO, id));
-
         }
     }
 

@@ -4,7 +4,7 @@ import com.mvbr.algafood.domain.model.Cozinha;
 import com.mvbr.algafood.domain.model.Restaurante;
 import com.mvbr.algafood.domain.repository.CozinhaRepository;
 import com.mvbr.algafood.domain.repository.RestauranteRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,14 +15,18 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/teste")
+@RequestMapping(value = "/teste",
+    produces = MediaType.APPLICATION_JSON_VALUE,
+    consumes = MediaType.APPLICATION_JSON_VALUE)
 public class TestController {
 
-    @Autowired
-    private CozinhaRepository cozinhaRepository;
+    private final CozinhaRepository cozinhaRepository;
+    private final RestauranteRepository restauranteRepository;
 
-    @Autowired
-    private RestauranteRepository restauranteRepository;
+    public TestController(CozinhaRepository cozinhaRepository, RestauranteRepository restauranteRepository) {
+        this.cozinhaRepository = cozinhaRepository;
+        this.restauranteRepository = restauranteRepository;
+    }
 
     @GetMapping("/cozinhas/por-nome")
     public List<Cozinha> listarCozinhaPorNome(@RequestParam("nome") String nome) {

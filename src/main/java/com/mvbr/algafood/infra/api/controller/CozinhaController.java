@@ -3,7 +3,6 @@ package com.mvbr.algafood.infra.api.controller;
 import com.mvbr.algafood.domain.model.Cozinha;
 import com.mvbr.algafood.domain.service.CozinhaService;
 import com.mvbr.algafood.infra.dto.CozinhasXmlWrapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -11,11 +10,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/cozinhas")
+@RequestMapping(value ="/api/v1/cozinhas",
+    produces = MediaType.APPLICATION_JSON_VALUE,
+    consumes = MediaType.APPLICATION_JSON_VALUE)
 public class CozinhaController {
 
-    @Autowired
-    private CozinhaService cozinhaService;
+    private final CozinhaService cozinhaService;
+
+    public CozinhaController(CozinhaService cozinhaService) {
+        this.cozinhaService = cozinhaService;
+    }
 
 //    @RequestMapping("/{cozinhaId}")
 //    public ResponseEntity<?> buscar(@PathVariable("cozinhaId") Long id) {
@@ -42,12 +46,12 @@ public class CozinhaController {
 //
 //    }
 
-    @RequestMapping("/{cozinhaId}")
+    @GetMapping("/{cozinhaId}")
     public Cozinha buscar(@PathVariable("cozinhaId") Long id) {
         return cozinhaService.buscar(id);
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping
     public List<Cozinha> listar() {
         return cozinhaService.listar();
     }

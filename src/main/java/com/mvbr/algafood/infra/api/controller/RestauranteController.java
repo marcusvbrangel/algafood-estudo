@@ -2,7 +2,6 @@ package com.mvbr.algafood.infra.api.controller;
 
 import com.mvbr.algafood.domain.model.Restaurante;
 import com.mvbr.algafood.domain.service.RestauranteService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -10,18 +9,23 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/restaurantes")
+@RequestMapping(value = "/api/v1/restaurantes",
+    produces = MediaType.APPLICATION_JSON_VALUE,
+    consumes = MediaType.APPLICATION_JSON_VALUE)
 public class RestauranteController {
 
-    @Autowired
-    private RestauranteService restauranteService;
+    private final RestauranteService restauranteService;
 
-    @RequestMapping("/{id}")
+    public RestauranteController(RestauranteService restauranteService) {
+        this.restauranteService = restauranteService;
+    }
+
+    @GetMapping("/{id}")
     public Restaurante buscar(@PathVariable("id") Long id) {
         return restauranteService.buscar(id);
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping
     public List<Restaurante> listar() {
         return restauranteService.listar();
     }

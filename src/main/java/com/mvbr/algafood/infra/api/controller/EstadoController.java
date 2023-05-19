@@ -2,7 +2,6 @@ package com.mvbr.algafood.infra.api.controller;
 
 import com.mvbr.algafood.domain.model.Estado;
 import com.mvbr.algafood.domain.service.EstadoService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -10,18 +9,23 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/estados")
+@RequestMapping(value = "/api/v1/estados",
+    produces = MediaType.APPLICATION_JSON_VALUE,
+    consumes = MediaType.APPLICATION_JSON_VALUE)
 public class EstadoController {
 
-    @Autowired
-    private EstadoService estadoService;
+    private final EstadoService estadoService;
 
-    @RequestMapping("/{estadoId}")
+    public EstadoController(EstadoService estadoService) {
+        this.estadoService = estadoService;
+    }
+
+    @GetMapping("/{estadoId}")
     public Estado buscar(@PathVariable("estadoId") Long id) {
         return estadoService.buscar(id);
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping
     public List<Estado> listar() {
         return estadoService.listar();
     }

@@ -2,7 +2,6 @@ package com.mvbr.algafood.infra.api.controller;
 
 import com.mvbr.algafood.domain.model.FormaPagamento;
 import com.mvbr.algafood.domain.service.FormaPagamentoService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -10,18 +9,23 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/formas-pagamento")
+@RequestMapping(value = "/api/v1/formas-pagamento",
+    produces = MediaType.APPLICATION_JSON_VALUE,
+    consumes = MediaType.APPLICATION_JSON_VALUE)
 public class FormaPagamentoController {
 
-    @Autowired
-    private FormaPagamentoService formaPagamentoService;
+    private final FormaPagamentoService formaPagamentoService;
 
-    @RequestMapping("/{id}")
+    public FormaPagamentoController(FormaPagamentoService formaPagamentoService) {
+        this.formaPagamentoService = formaPagamentoService;
+    }
+
+    @GetMapping("/{id}")
     public FormaPagamento buscar(@PathVariable("id") Long id) {
         return formaPagamentoService.buscar(id);
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping
     public List<FormaPagamento> listar() {
         return formaPagamentoService.listar();
     }
