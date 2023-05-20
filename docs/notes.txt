@@ -11,6 +11,7 @@ CTRL + Y
 SHIFT + ENTER
 CTRL + /
 CTRL + SHIFT + /
+CTRL + H
 
 CTRL + SHIFT + CIMA / BAIXO
 ALT + SHIFT + CLIQUE DO MOUSE
@@ -19,6 +20,17 @@ CTRL + J
 ALT + ENTER
  */
 
+
+-------------------------------------------------
+
+IntelliJ IDEA - ReferenceCard
+https://resources.jetbrains.com/storage/products/intellij-idea/docs/IntelliJIDEA_ReferenceCard.pdf
+
+Alura - IntelliJ IDEA: dicas e truques para usar no dia a dia
+https://www.alura.com.br/artigos/intellij-idea-dicas-truques-usar-no-dia-a-dia
+
+Basef - Atalhos do IntelliJ Idea
+http://www.basef.com.br/index.php/Atalhos_do_IntelliJ_Idea
 
 -------------------------------------------------
 
