@@ -1,8 +1,8 @@
 package com.mvbr.algafood.domain.service;
 
+import com.mvbr.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.mvbr.algafood.domain.exception.EntidadeEmUsoException;
 import com.mvbr.algafood.domain.exception.EntidadeExistenteException;
-import com.mvbr.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.mvbr.algafood.domain.model.Cozinha;
 import com.mvbr.algafood.domain.repository.CozinhaRepository;
 import org.springframework.beans.BeanUtils;
@@ -20,14 +20,12 @@ public class CozinhaService {
         this.cozinhaRepository = cozinhaRepository;
     }
 
-    private static final String MSG_COZINHA_NAO_ENCONTRADA = "Cozinha de código %d não pode ser encontrada";
     private static final String MSG_COZINHA_EXISTENTE = "Cozinha de nome %s já existente";
     private static final String MSG_COZINHA_EM_USO = "Cozinha de código %d não pode ser excluída, pois está em uso";
 
     public Cozinha buscar(Long id) {
         return cozinhaRepository.findById(id)
-            .orElseThrow(() -> new EntidadeNaoEncontradaException(
-                String.format(MSG_COZINHA_NAO_ENCONTRADA, id)));
+            .orElseThrow(() -> new CozinhaNaoEncontradaException(id));
     }
 
     public List<Cozinha> listar() {
@@ -135,10 +133,6 @@ public class CozinhaService {
         try {
             Cozinha cozinha = this.buscar(id);
             cozinhaRepository.delete(cozinha);
-
-        } catch (EntidadeNaoEncontradaException e) {
-            throw new EntidadeNaoEncontradaException(
-                String.format(MSG_COZINHA_NAO_ENCONTRADA, id));
 
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeEmUsoException(

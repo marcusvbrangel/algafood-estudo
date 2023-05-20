@@ -28,4 +28,3 @@ alter table restaurante alter column taxa_frete set not null;
 alter table restaurante alter column data_cadastro set not null;
 alter table restaurante alter column data_atualizacao set not null;
 alter table restaurante alter column cozinha_id set not null;
-alter table restaurante alter column endereco_cidade_id set not null;

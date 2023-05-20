@@ -65,10 +65,6 @@ public class FormaPagamentoService {
             FormaPagamento formaPagamento = this.buscar(id);
             formaPagamentoRepository.delete(formaPagamento);
 
-        } catch (EntidadeNaoEncontradaException e) {
-            throw new EntidadeNaoEncontradaException(
-                String.format(MSG_FORMA_DE_PAGAMENTO_NAO_ENCONTRADA, id));
-
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeEmUsoException(
                 String.format(MSG_FORMA_DE_PAGAMENTO_EM_USO, id));

@@ -65,10 +65,6 @@ public class PermissaoService {
             Permissao permissao = this.buscar(id);
             permissaoRepository.delete(permissao);
 
-        } catch (EntidadeNaoEncontradaException e) {
-            throw new EntidadeNaoEncontradaException(
-                String.format(MSG_PERMISSAO_NAO_ENCONTRADA, id));
-
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeEmUsoException(
                 String.format(MSG_PERMISSAO_EM_USO, id));

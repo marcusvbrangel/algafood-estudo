@@ -245,6 +245,27 @@ Anyway, we can disable the OSIV by using the spring.jpa.open-in-view configurati
 
 -------------------------------------------------
 
+JSON NOVO RESTAURANTE:
+
+{
+        "nome": "Restaurante do Maluco",
+        "taxaFrete": 1.25,
+        "cozinha": {
+            "id": 2,
+            "nome": "Cozinha Indiana"
+        },
+        "endereco": {
+            "cep": null,
+            "logradouro": null,
+            "numero": null,
+            "complemento": null,
+            "bairro": null,
+            "cidade": {
+                "id": 9,
+                "nome": "Uberlândia"
+            }
+        }
+    }
 
 -------------------------------------------------
 

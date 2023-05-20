@@ -2,7 +2,7 @@ package com.mvbr.algafood.domain.service;
 
 import com.mvbr.algafood.domain.exception.EntidadeEmUsoException;
 import com.mvbr.algafood.domain.exception.EntidadeExistenteException;
-import com.mvbr.algafood.domain.exception.EntidadeNaoEncontradaException;
+import com.mvbr.algafood.domain.exception.EstadoNaoEncontradoException;
 import com.mvbr.algafood.domain.model.Estado;
 import com.mvbr.algafood.domain.repository.EstadoRepository;
 import org.springframework.beans.BeanUtils;
@@ -20,14 +20,12 @@ public class EstadoService {
         this.estadoRepository = estadoRepository;
     }
 
-    private static final String MSG_ESTADO_NAO_ENCONTRADO = "Estado de código %d não pode ser encontrado";
     private static final String MSG_ESTADO_EXISTENTE = "Estado de nome %s já existente";
     private static final String MSG_ESTADO_EM_USO = "Estado de código %d não pode ser excluído, pois está em uso";
 
     public Estado buscar(Long id) {
         return estadoRepository.findById(id)
-            .orElseThrow(() -> new EntidadeNaoEncontradaException(
-                String.format(MSG_ESTADO_NAO_ENCONTRADO, id)));
+            .orElseThrow(() -> new EstadoNaoEncontradoException(id));
     }
 
     public List<Estado> listar() {
@@ -64,10 +62,6 @@ public class EstadoService {
         try {
             Estado estado = this.buscar(id);
             estadoRepository.delete(estado);
-
-        } catch (EntidadeNaoEncontradaException e) {
-            throw new EntidadeNaoEncontradaException(
-                String.format(MSG_ESTADO_NAO_ENCONTRADO, id));
 
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeEmUsoException(
