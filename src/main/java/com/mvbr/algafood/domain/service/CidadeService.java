@@ -44,7 +44,7 @@ public class CidadeService {
 
             cidade.setEstado(estado);
 
-            // todo: tratar exceptions para estado e cidade...
+            // todo: tratar exceptions para estado e cidade (bad_request)...
             // 8.10. Afinando a granularidade e definindo a hierarquia das exceptions de negócios
 
             return cidadeRepository.save(cidade);
@@ -66,7 +66,7 @@ public class CidadeService {
 
             BeanUtils.copyProperties(cidade, cidadeAtual, "id");
 
-            // todo: tratar exceptions para estado e cidade...
+            // todo: tratar exceptions para estado e cidade (bad_request)...
             // 8.10. Afinando a granularidade e definindo a hierarquia das exceptions de negócios
 
             return cidadeRepository.save(cidadeAtual);
