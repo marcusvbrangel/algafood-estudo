@@ -1,5 +1,5 @@
 ## Algafood Study Project
 
 ---
-### 08 - Tratamento e Modelagem de Erros da API
+### 09 - Validação do modelo com Bean Validation
 

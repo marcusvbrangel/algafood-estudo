@@ -2,6 +2,7 @@ package com.mvbr.algafood.infra.api.controller;
 
 import com.mvbr.algafood.domain.model.Restaurante;
 import com.mvbr.algafood.domain.service.RestauranteService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -32,12 +33,12 @@ public class RestauranteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Restaurante criar(@RequestBody Restaurante restaurante) {
+    public Restaurante criar(@RequestBody @Valid Restaurante restaurante) {
         return restauranteService.criar(restaurante);
     }
 
     @PutMapping("/{id}")
-    public Restaurante atualizar(@PathVariable Long id, @RequestBody Restaurante restaurante) {
+    public Restaurante atualizar(@PathVariable Long id, @RequestBody @Valid Restaurante restaurante) {
         return restauranteService.atualizar(id, restaurante);
     }
 

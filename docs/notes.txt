@@ -281,6 +281,22 @@ JSON NOVO RESTAURANTE:
 
 -------------------------------------------------
 
+Jakarta Bean Validation:
+https://beanvalidation.org/
+https://beanvalidation.org/3.0/
+
+Jakarta Bean Validation specification:
+https://jakarta.ee/specifications/bean-validation/3.0/jakarta-bean-validation-spec-3.0.html
+
+API JAVA DOCS (Jakarta Bean Validation API 3.0.0):
+https://jakarta.ee/specifications/bean-validation/3.0/apidocs/
+
+Hibernate Validator
+The Bean Validation reference implementation:
+https://hibernate.org/validator/
+
+Baeldung - Java Bean Validation Basics:
+https://www.baeldung.com/javax-validation
 
 
 -------------------------------------------------

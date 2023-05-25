@@ -2,7 +2,10 @@ package com.mvbr.algafood.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import com.mvbr.algafood.domain.validation.groups.Groups;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -17,13 +20,14 @@ import java.util.List;
 @Entity
 public class Cozinha {
 
+    @NotNull(groups = Groups.CozinhaId.class)
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ToString.Include
-    @Column(length = 50, nullable = false, unique = true)
+    @NotBlank
     private String nome;
 
     @JsonIgnore
